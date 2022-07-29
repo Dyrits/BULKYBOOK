@@ -19,4 +19,10 @@ public class CategoryController : Controller
         IEnumerable<Category> categories = _db.Categories;
         return View(categories);
     }
+    
+    // GET
+    public IActionResult Create()
+    {
+        return View();
+    }
 }
