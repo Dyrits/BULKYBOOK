@@ -39,6 +39,7 @@ public class CategoryController : Controller
         {
             _db.Categories.Add(category);
             _db.SaveChanges();
+            TempData["success"] = "Category has been successfully created.";
             return RedirectToAction("Index");
         }
         return View(category);
@@ -66,6 +67,7 @@ public class CategoryController : Controller
         {
             _db.Categories.Update(category);
             _db.SaveChanges();
+            TempData["success"] = "Category has been successfully updated.";
             return RedirectToAction("Index");
         }
         return View(category);
@@ -85,16 +87,9 @@ public class CategoryController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Delete(Category category)
     {
-        if (category.Name == category.DisplayOrder.ToString())
-        {
-            ModelState.AddModelError("Name", "The Display Order cannot exactly match the Name.");
-        }
-        if (ModelState.IsValid)
-        {
-            _db.Categories.Remove(category);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-        return View(category);
+        _db.Categories.Remove(category);
+        _db.SaveChanges();
+        TempData["success"] = "Category has been successfully deleted.";
+        return RedirectToAction("Index");
     }
 }
